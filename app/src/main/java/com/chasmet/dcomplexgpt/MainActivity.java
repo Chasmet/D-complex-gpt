@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends android.app.Activity {
     private AppPrefs prefs;
     private UpdateManager updateManager;
 
