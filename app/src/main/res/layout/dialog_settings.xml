@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/versionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Version installée"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/autoUpdateCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Mise à jour automatique au démarrage" />
+
+    <Button
+        android:id="@+id/checkUpdateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Vérifier maintenant"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Les futures versions sont récupérées depuis GitHub Releases. Avec la même signature APK, Android installe la nouvelle version par-dessus l’ancienne sans effacer les données."
+        android:textSize="12sp" />
+
+</LinearLayout>
