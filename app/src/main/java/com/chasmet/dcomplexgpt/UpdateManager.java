@@ -57,7 +57,7 @@ public final class UpdateManager {
 
                 JSONObject release = new JSONObject(readText(connection.getInputStream()));
                 String latest = release.optString("tag_name", "").replaceFirst("^[vV]", "");
-                String current = BuildConfig.VERSION_NAME.replace("-debug", "");
+                String currentDisplay = getCurrentVersion();\n                String current = currentDisplay.replace("-debug", "");
 
                 String apkUrl = "";
                 JSONArray assets = release.optJSONArray("assets");
@@ -73,7 +73,7 @@ public final class UpdateManager {
                 }
 
                 if (latest.isEmpty() || apkUrl.isEmpty() || compareVersions(latest, current) <= 0) {
-                    if (manual) toast("Application à jour (" + BuildConfig.VERSION_NAME + ").");
+                    if (manual) toast("Application à jour (" + currentDisplay + ").");
                     return;
                 }
 
@@ -175,6 +175,16 @@ public final class UpdateManager {
             }
         }
         return builder.toString();
+    }
+
+    private String getCurrentVersion() {
+        try {
+            return activity.getPackageManager()
+                    .getPackageInfo(activity.getPackageName(), 0)
+                    .versionName;
+        } catch (Exception e) {
+            return "0.0.0";
+        }
     }
 
     private void toast(String message) {
