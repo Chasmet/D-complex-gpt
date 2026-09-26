@@ -9,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public final class MainActivity extends android.app.Activity {
     private AppPrefs prefs;
     private UpdateManager updateManager;
@@ -26,7 +24,7 @@ public final class MainActivity extends android.app.Activity {
         TextView versionHome = findViewById(R.id.versionHome);
         Button settingsButton = findViewById(R.id.settingsButton);
 
-        versionHome.setText("Version " + BuildConfig.VERSION_NAME);
+        versionHome.setText("Version " + getVersionName());
         settingsButton.setOnClickListener(v -> showSettings());
 
         if (prefs.isAutoUpdateEnabled()) {
@@ -42,7 +40,7 @@ public final class MainActivity extends android.app.Activity {
         CheckBox autoUpdateCheck = view.findViewById(R.id.autoUpdateCheck);
         Button checkUpdateButton = view.findViewById(R.id.checkUpdateButton);
 
-        versionText.setText("Version installée : " + BuildConfig.VERSION_NAME);
+        versionText.setText("Version installée : " + getVersionName());
         autoUpdateCheck.setChecked(prefs.isAutoUpdateEnabled());
         checkUpdateButton.setOnClickListener(v -> updateManager.check(true));
 
@@ -61,5 +59,12 @@ public final class MainActivity extends android.app.Activity {
                     ).show();
                 })
                 .show();
+    }
+    private String getVersionName() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            return "inconnue";
+        }
     }
 }
