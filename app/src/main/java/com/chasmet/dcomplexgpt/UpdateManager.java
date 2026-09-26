@@ -57,7 +57,8 @@ public final class UpdateManager {
 
                 JSONObject release = new JSONObject(readText(connection.getInputStream()));
                 String latest = release.optString("tag_name", "").replaceFirst("^[vV]", "");
-                String currentDisplay = getCurrentVersion();\n                String current = currentDisplay.replace("-debug", "");
+                String currentDisplay = getCurrentVersion();
+                String current = currentDisplay.replace("-debug", "");
 
                 String apkUrl = "";
                 JSONArray assets = release.optJSONArray("assets");
