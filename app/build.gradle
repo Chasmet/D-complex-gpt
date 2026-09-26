@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+def buildVersionCode = (project.findProperty("VERSION_CODE") ?: "1") as Integer
+def buildVersionName = project.findProperty("VERSION_NAME") ?: "1.0.0"
+
+android {
+    namespace 'com.chasmet.dcomplexgpt'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.chasmet.dcomplexgpt"
+        minSdk 21
+        targetSdk 34
+        versionCode buildVersionCode
+        versionName buildVersionName
+    }
+
+    signingConfigs {
+        release {
+            def keyStorePath = System.getenv("KEYSTORE_FILE")
+            if (keyStorePath != null && !keyStorePath.isEmpty()) {
+                storeFile file(keyStorePath)
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (System.getenv("KEYSTORE_FILE") != null && !System.getenv("KEYSTORE_FILE").isEmpty()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.core:core:1.15.0'
+}
