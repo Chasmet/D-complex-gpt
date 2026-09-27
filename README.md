@@ -1,16 +1,26 @@
 # D-Complex GPT
 
-Application Android Java servant d’interface personnelle vers un backend d’assistant compatible OpenAI + MCP.
+Application Android Java orientée **MCP uniquement**.
 
-Le dépôt ne stocke aucune clé OpenAI dans l’APK. Le client Android appelle un backend HTTPS configurable (route recommandée `/dcomplex/*`).
+## Architecture
 
-## Objectifs V1
-- assistant intégré dans l’application ;
-- test de connexion backend/MCP ;
-- ouverture de l’application officielle ChatGPT ;
-- réglages persistants ;
-- mise à jour APK via GitHub Releases ;
-- CI Android et workflow de release signée.
+- aucune clé API OpenAI dans l’application ;
+- aucune connexion directe à l’API OpenAI ;
+- connexion à un serveur MCP distant en HTTPS ;
+- test MCP réel avec `initialize`, `notifications/initialized` et `tools/list` ;
+- affichage du nombre et du nom des outils MCP disponibles ;
+- réglages MCP persistants ;
+- mise à jour APK intégrée via GitHub Releases ;
+- compilation APK automatisée avec GitHub Actions.
 
-## Limite d’architecture
-Android ne peut pas donner des « droits sur ChatGPT » à une application tierce. L’intégration fiable se fait via l’API OpenAI côté serveur et les outils MCP autorisés par ce serveur. L’ouverture de l’application ChatGPT est séparée.
+## Mise à jour Android
+
+L’application vérifie la dernière GitHub Release, télécharge le nouvel APK puis lance l’installation Android.
+
+Pour conserver les données entre versions, toutes les releases doivent garder :
+- le même `applicationId` ;
+- la même clé de signature Android.
+
+## Important
+
+MCP donne accès uniquement aux outils, ressources et actions réellement exposés et autorisés par le serveur MCP. Il ne donne pas automatiquement un contrôle total sur l’application officielle ChatGPT ni sur le modèle.
